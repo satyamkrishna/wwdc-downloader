@@ -24,13 +24,13 @@ def save(url, dst, force=False):
 
 def downloadYear(year):
 
-    url = 'https://developer.apple.com/videos/wwdc' + year +  '/'
+    url = 'https://developer.apple.com/videos/wwdc' + str(year) +  '/'
     soup = BeautifulSoup(urllib2.urlopen(url).read(), "html.parser")
     container = soup.find('section', 'all-content')
     for section in container.find_all('li', 'video-tag event'):
         session_string = section.find('span', 'smaller')
         sessionID = session_string.text.split(' ')[1]
-        downloadSessionVideo(year, sessionID)
+        downloadSessionVideo(str(year), sessionID)
 
 def downloadSessionVideo(year, sessionID):
     folder_dst = 'WWDC/2015'
