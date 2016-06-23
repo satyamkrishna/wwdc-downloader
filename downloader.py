@@ -33,7 +33,7 @@ def downloadYear(year):
         downloadSessionVideo(str(year), sessionID)
 
 def downloadSessionVideo(year, sessionID):
-    folder_dst = 'WWDC/2015'
+    folder_dst = 'WWDC/' + year
     url = 'https://developer.apple.com/videos/play/wwdc' + year + '/' + sessionID + '/'
 
     page = BeautifulSoup(urllib2.urlopen(url).read(), "html.parser")
@@ -51,5 +51,5 @@ def downloadSessionVideo(year, sessionID):
             dst = u"{0}/{1}/slides.pdf".format(folder_dst, title)
             save(a_href['href'], dst)
 
-downloadYear(2015)
+downloadYear(2016)
 
