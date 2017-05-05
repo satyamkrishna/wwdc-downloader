@@ -3,6 +3,7 @@ import os
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
+import subprocess
 
 def report(count, block_size, total_size):
     """Report save progression."""
@@ -14,13 +15,15 @@ def report(count, block_size, total_size):
 
 def save(url, dst, force=False):
     """Download a file at url to local folder."""
-    if not os.path.isfile(dst) or force:
+    #if not os.path.isfile(dst) or force:
         # Test if the directory exist or create
-        d = os.path.dirname(dst)
-        if not os.path.exists(d):
-            os.makedirs(d)
-        print(u"\nDownloading: {0} to {1}".format(url, dst))
-        urllib.urlretrieve(url, dst, report)
+    d = os.path.dirname(dst)
+    if not os.path.exists(d):
+        os.makedirs(d)
+    print(u"\nDownloading: {0} to {1}".format(url, dst))
+        #urllib.urlretrieve(url, dst, report)
+    cmd='wget -c -O "%s" "%s"' % (dst,url)
+    subprocess.call(cmd,shell=True)
 
 def downloadYear(year):
 
