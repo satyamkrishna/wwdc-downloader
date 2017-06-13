@@ -51,5 +51,5 @@ def downloadSessionVideo(year, sessionID):
             dst = u"{0}/{1}/slides.pdf".format(folder_dst, title)
             save(a_href['href'], dst)
 
-downloadYear(2016)
+downloadYear(2017)
 
