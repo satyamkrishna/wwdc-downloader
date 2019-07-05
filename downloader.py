@@ -30,18 +30,22 @@ def downloadYear(year):
     url = 'https://developer.apple.com/videos/wwdc' + str(year) +  '/'
     soup = BeautifulSoup(urllib2.urlopen(url).read(), "html.parser")
     container = soup.find('section', 'all-content')
-    for section in container.find_all('li', 'video-tag event'):
+    sections = container.find_all('li', 'video-tag session')
+    events = container.find_all('li', 'video-tag event hidden')
+    for index, section in enumerate(sections, start=0):
         session_string = section.find('span', 'smaller')
         sessionID = session_string.text.split(' ')[1]
-        downloadSessionVideo(str(year), sessionID)
+        event_string = events[index].find('span', 'smaller').text
+        downloadSessionVideo(str(year), event_string, sessionID)
 
-def downloadSessionVideo(year, sessionID):
-    folder_dst = 'WWDC/' + year
+def downloadSessionVideo(year, eventName, sessionID):
+    print(year, eventName, sessionID)
+    folder_dst = 'WWDC/' + year + '/' + eventName
     url = 'https://developer.apple.com/videos/play/wwdc' + year + '/' + sessionID + '/'
 
     page = BeautifulSoup(urllib2.urlopen(url).read(), "html.parser")
     title = page.find('title').text.split('-')[0].strip()
-    print '\n\n'+title
+    print ('\n\n'+title)
     resource = page.find('ul', 'supplements')
     a = resource.find_all('a')
 
@@ -54,5 +58,5 @@ def downloadSessionVideo(year, sessionID):
             dst = u"{0}/{1}/slides.pdf".format(folder_dst, title)
             save(a_href['href'], dst)
 
-downloadYear(2016)
+downloadYear(2019)
 
